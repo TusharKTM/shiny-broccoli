@@ -1,0 +1,127 @@
+
+<html>
+    <head>
+        <title>VGPT GRAPH</title>
+        <style type="text/css">
+        body {
+        background-color:red;
+        color : #00ff00;
+        font-size:400%;
+        }
+        
+        .mah
+        {
+         font-size:80%;
+         position:relative;
+         border:2px solid black;
+         height:5%;
+        width : 10%;
+        
+        }
+        #pl{
+        font-size:100%;
+        position:absolute ;
+        top:88%;
+        left:79%;
+        height:5%;
+        width:20%;
+        }
+        #ma{
+        font-size:100%;
+        position:absolute ;
+        top:88%;
+        left:1%;
+        height:5%;
+        width:20%;
+        }
+        #color{
+        font-size:200%;
+        position:absolute ;
+        top:70%;
+        left:30%;
+        height:5%;
+        width:40%;
+        }
+        p{
+        font-size:100%;
+        position:absolute ;
+        top:72%;
+        font-style:bold ;
+        left:35%;
+        height:5%;
+        width:40%;
+        }
+        </style>
+    </head>
+    <body>
+    <center><h1>VGPT</h1></center>
+        <canvas id = "canvas1"></canvas>
+        </br><br>
+        
+        <input class = "mah" type = "number"/>
+        x^4 +
+        <input class = "mah" type = "number"/>
+        x^3 +
+        <input class = "mah" type = "number"/>
+        x^2 +
+        <input class = "mah" type = "number"/>
+        x +
+        <input class = "mah" type = "number"/>
+        </br></br>
+       <p> Select Color:</p></br>
+        <input id = "color" type = "color" placeholder="color" value = "#00ff00"/>
+        <br/>
+        <button onclick = "plot()" id="pl">Show</button>
+        <button onclick = "tushar()" id="ma">Clear</button>
+    </body>
+    <script type="text/javascript">
+    const tusX = 960, tusY = 800;
+    const WXHF = tusX / 2, WYHF = tusY / 2;
+    const SCALE = 10; //1/n
+    
+    window.onload = tushar;
+    
+    var cntxt;
+    
+    function tushar()
+    {
+    var canvas = document.getElementById("canvas1");
+    cntxt = canvas.getContext("2d");
+    
+    //initialize
+    canvas.width = tusX; canvas.height = tusY;
+    cntxt.fillRect(0, 0, tusX, tusY);
+    
+    cntxt.beginPath();
+    cntxt.moveTo(WXHF, 0);
+    cntxt.lineTo(WXHF, tusY);
+    cntxt.moveTo(0, WYHF);
+    cntxt.lineTo(tusX, WYHF);
+    cntxt.strokeStyle = "blue";
+    cntxt.stroke();
+    }
+    
+    function plot()
+    {
+    var ftemp = document.getElementsByClassName("mah");
+    var f = [];
+    for(var i = 0; i <= 4; ++i)
+    f[4 - i] = ftemp[i] == "" ? 0 : +ftemp[i].value;
+    
+    cntxt.beginPath();
+    cntxt.moveTo(0, WYHF);
+    for(var posx = 0; posx <= tusX; posx += 2)
+    {
+    var x = (posx - WXHF) / SCALE;
+    var y = f[4]*x*x*x*x + f[3]*x*x*x +f[2]*x*x +f[1]*x +f[0];
+    cntxt.lineTo(posx, WYHF - y);
+    }
+    
+    var colorSetting
+    = document.getElementById("color").value;
+    cntxt.strokeStyle = colorSetting;
+    cntxt.lineWidth = 2;
+    cntxt.stroke();
+    }
+    </script>
+</html>
